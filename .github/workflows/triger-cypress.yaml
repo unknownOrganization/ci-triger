@@ -1,0 +1,14 @@
+name: run cypress test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runcy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: trigger cypress test
+        run: |
+          gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main 
