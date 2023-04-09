@@ -13,4 +13,5 @@ jobs:
         run: |
           gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
         env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
