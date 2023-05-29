@@ -22,7 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
-        uses: lewagon/wait-on-check-action@1.3.1
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: master
           check-name: test
