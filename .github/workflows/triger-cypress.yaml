@@ -23,7 +23,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
         run: |
-          gh run -R unknownOrganization/cypress-ci-test watch
+          gh run -R unknownOrganization/cypress-ci-test list
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
