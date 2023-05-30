@@ -9,12 +9,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: trigger cypress test
-        run: |
-          gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: trigger cypress test
+      #   run: |
+      #     gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: list cypress test workflow
         run: |
           gh workflow -R unknownOrganization/cypress-ci-test list
@@ -22,9 +22,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: master
-          check-name: test
-          repo-token: ${{ secrets.GH_TOKEN }}
-          wait-interval: 20
+        run: |
+          gh run -R unknownOrganization/cypress-ci-test list
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
