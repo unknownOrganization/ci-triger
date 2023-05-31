@@ -27,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
         run: |
-          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list --json name,conclusion
+          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
