@@ -15,7 +15,7 @@ jobs:
           gh api \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /unknownOrganization/cypress-ci-test/ray31245
+          /repos/unknownOrganization/cypress-ci-test/ray31245/actions/workflows
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
