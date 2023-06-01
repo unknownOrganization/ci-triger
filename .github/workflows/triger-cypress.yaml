@@ -31,7 +31,7 @@ jobs:
         run: |
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list
           export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status)
-          echo $RUN_INFO | jq.[0]
+          echo $RUN_INFO | jq .[0]
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
