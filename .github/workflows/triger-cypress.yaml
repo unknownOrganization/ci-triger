@@ -30,7 +30,7 @@ jobs:
       - name: wait for test success
         run: |
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list
-          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml -status in_progress --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status
+          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml -status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
