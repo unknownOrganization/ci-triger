@@ -13,7 +13,7 @@ jobs:
         run: |
           export NOWTIME=$(date +%s)
           gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
-          
+
           # gh api \
           # -H "Accept: application/vnd.github+json" \
           # -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -30,7 +30,7 @@ jobs:
       - name: wait for test success
         run: |
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list
-          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status
+          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml -status in_progress --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
