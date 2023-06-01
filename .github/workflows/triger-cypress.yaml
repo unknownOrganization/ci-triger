@@ -30,10 +30,9 @@ jobs:
       - name: wait for test success
         run: |
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list
-          echo $RUN_INFO
-          until [ "$(echo $RUN_INFO | jq .[0])" != "null" ]; do
-            echo $(echo $RUN_INFO | jq .[0])
-            export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status)
+          export RUN_INFO="null"
+          until [ "$RUN_INFO" != "null" ]; do
+            export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
