@@ -37,7 +37,7 @@ jobs:
           echo $RUN_INFO
           echo $RUN_INFO | jq .
           echo $RUN_INFO | jq .databaseId
-          gh run -R unknownOrganization/cypress-ci-test --interval 1 --exit-status $($RUN_INFO | jq .databaseId)  watch
+          gh run -R unknownOrganization/cypress-ci-test --interval 1 --exit-status $(echo $RUN_INFO | jq .databaseId)  watch
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
