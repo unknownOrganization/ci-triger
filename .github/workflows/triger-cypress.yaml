@@ -37,7 +37,7 @@ jobs:
             if [ "$RUN_INFO" != "null" ]; then 
               export CREATETIME=$(date -d "$(echo $RUN_INFO | jq -r .createdAt)" +%s)
             fi
-            DURATION=$( (`date +%s` - $TRIGGERTIME) )
+            DURATION=$( expr `date +%s` - $TRIGGERTIME )
             if [ "$DURATION" -gt "36000" ]; then
               exit 1
             fi
