@@ -26,16 +26,20 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
         run: |
-          export NOWTIME=$(date +%s)
+          export TRIGGERTIME=$(date +%s)
           gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
 
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list
           export RUN_INFO="null"
           export CREATETIME=0
-          until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$NOWTIME" ]; do
+          until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$TRIGGERTIME" ]; do
             export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
             if [ "$RUN_INFO" != "null" ]; then 
               export CREATETIME=$(date -d "$(echo $RUN_INFO | jq -r .createdAt)" +%s)
+            fi
+            DURATION=$( $(date +%s) - $TRIGGERTIME )
+            if [ "$DURATION" -gt "36000" ]; then
+              exit 1
             fi
           done
           echo $RUN_INFO
@@ -43,7 +47,7 @@ jobs:
           echo $RUN_INFO | jq .databaseId
           echo $RUN_INFO | jq .createdAt
           echo $CREATETIME
-          echo $NOWTIME
+          echo $TRIGGERTIME
           gh run -R unknownOrganization/cypress-ci-test --interval 30 --exit-status $(echo $RUN_INFO | jq .databaseId)  watch
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
