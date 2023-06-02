@@ -9,18 +9,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: trigger cypress test
-        run: |
-          export NOWTIME=$(date +%s)
-          gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
-
-          # gh api \
-          # -H "Accept: application/vnd.github+json" \
-          # -H "X-GitHub-Api-Version: 2022-11-28" \
-          # /repos/unknownOrganization/cypress-ci-test/ray31245/actions/workflows
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: trigger cypress test
+      #   run: |
+      #     # gh api \
+      #     # -H "Accept: application/vnd.github+json" \
+      #     # -H "X-GitHub-Api-Version: 2022-11-28" \
+      #     # /repos/unknownOrganization/cypress-ci-test/ray31245/actions/workflows
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: list cypress test workflow
         run: |
           gh workflow -R unknownOrganization/cypress-ci-test list
@@ -29,6 +26,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: wait for test success
         run: |
+          export NOWTIME=$(date +%s)
+          gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
+
           gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list
           export RUN_INFO="null"
           until [ "$RUN_INFO" != "null" ]; do
