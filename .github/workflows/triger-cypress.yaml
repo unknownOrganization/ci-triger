@@ -33,7 +33,7 @@ jobs:
           export RUN_INFO="null"
           until [ "$RUN_INFO" != "null" ]; do
             export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
-            export CREATETIME=$(date -d "$(echo $RUN_INFO | jq .createdAt)" +%s)
+            export CREATETIME=$(date -d "$(echo $RUN_INFO | jq -r .createdAt)" +%s)
           done
           echo $RUN_INFO
           echo $RUN_INFO | jq .
