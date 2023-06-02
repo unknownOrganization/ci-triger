@@ -33,10 +33,14 @@ jobs:
           export RUN_INFO="null"
           until [ "$RUN_INFO" != "null" ]; do
             export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
+            export CREATETIME=$(echo $RUN_INFO | jq .createdAt)
           done
           echo $RUN_INFO
           echo $RUN_INFO | jq .
           echo $RUN_INFO | jq .databaseId
+          echo $RUN_INFO | jq .createdAt
+          echo $CREATETIME
+          echo $NOWTIME
           gh run -R unknownOrganization/cypress-ci-test --interval 1 --exit-status $(echo $RUN_INFO | jq .databaseId)  watch
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
