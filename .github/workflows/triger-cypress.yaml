@@ -33,12 +33,12 @@ jobs:
           export RUN_INFO="null"
           export CREATETIME=0
           until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$TRIGGERTIME" ]; do
-            export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
+            export RUN_INFO=$(gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --limit 1  list --json name,conclusion,databaseId,workflowDatabaseId,createdAt,status | jq .[0])
             if [ "$RUN_INFO" != "null" ]; then 
               export CREATETIME=$(date -d "$(echo $RUN_INFO | jq -r .createdAt)" +%s)
             fi
             DURATION=$( expr `date +%s` - $TRIGGERTIME )
-            if [ "$DURATION" -gt "6" ]; then
+            if [ "$DURATION" -gt "60" ]; then
               echo "time out"
               exit 1
             fi
