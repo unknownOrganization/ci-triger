@@ -38,7 +38,7 @@ jobs:
               export CREATETIME=$(date -d "$(echo $RUN_INFO | jq -r .createdAt)" +%s)
             fi
             DURATION=$( expr `date +%s` - $TRIGGERTIME )
-            if [ "$DURATION" -gt "36000" ]; then
+            if [ "$DURATION" -gt "6" ]; then
               exit 1
             fi
           done
