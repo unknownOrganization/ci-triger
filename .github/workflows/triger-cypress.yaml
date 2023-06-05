@@ -39,6 +39,7 @@ jobs:
             fi
             DURATION=$( expr `date +%s` - $TRIGGERTIME )
             if [ "$DURATION" -gt "6" ]; then
+              echo "time out"
               exit 1
             fi
           done
