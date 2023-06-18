@@ -29,7 +29,6 @@ jobs:
           export TRIGGERTIME=$(date +%s)
           gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
 
-          gh run -R unknownOrganization/cypress-ci-test --workflow integration.yaml --status="in_progress" --limit 1  list
           export RUN_INFO="null"
           export CREATETIME=0
           until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$TRIGGERTIME" ]; do
