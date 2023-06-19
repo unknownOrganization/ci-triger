@@ -33,7 +33,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: catch workflow run
         run: |
-          echo $TRIGGERTIME
           export RUN_INFO="null"
           export CREATETIME=0
           until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$TRIGGERTIME" ]; do
