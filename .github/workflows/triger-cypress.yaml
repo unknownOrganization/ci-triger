@@ -24,11 +24,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: wait for test success
+      - name: trigger
         run: |
           export TRIGGERTIME=$(date +%s)
           gh workflow -R unknownOrganization/cypress-ci-test run integration.yaml -r main
-
+      - name: catch workflow run
+        run: |
           export RUN_INFO="null"
           export CREATETIME=0
           until [ "$RUN_INFO" != "null" ] && [ "$CREATETIME" -gt "$TRIGGERTIME" ]; do
@@ -42,6 +43,8 @@ jobs:
               exit 1
             fi
           done
+      - name: watch workflow run
+        run: |
           echo $RUN_INFO
           echo $RUN_INFO | jq .
           echo $RUN_INFO | jq .databaseId
