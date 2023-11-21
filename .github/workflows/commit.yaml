@@ -10,15 +10,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-    #   - name: ⚙️ Configure Git
-    #     run: |
-    #       git config user.name "$GITHUB_ACTOR"
-    #       git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: ⚙️ Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: commit
         run: |
+          B_NAME="$(uuidgen)"
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
 
-          git config --local user.name "github-actions[bot]"
+          git branch "$B_NAME"
+          gh pr checkout "$PR_NUMBER"
           echo 'a' >> text.text
           git add -A
           git commit -m "test: empty"
