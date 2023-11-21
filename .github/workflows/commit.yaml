@@ -20,7 +20,7 @@ jobs:
           B_NAME="$(uuidgen)"
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
 
-          'a' >> text.text
+          echo 'a' >> text.text
           git commit -m "test: empty"
 
           git branch "$B_NAME"
