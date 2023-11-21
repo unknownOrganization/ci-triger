@@ -10,24 +10,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-    #   - name: ⚙️ Configure Git
-    #     run: |
-    #       git config user.name "$GITHUB_ACTOR"
-    #       git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: ⚙️ Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: commit
         run: |
           B_NAME="$(uuidgen)"
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
 
-          git config --local user.name "github-actions[bot]"
-          git branch "$B_NAME"
-          gh pr checkout "$PR_NUMBER"
           echo 'a' >> text.text
           git add -A
           git commit -m "test: empty"
 
+          git branch "$B_NAME"
+          gh pr checkout "$PR_NUMBER"
+          git cherry-pick "$B_NAME"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
+      - name: Auto-Approve
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
