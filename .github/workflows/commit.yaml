@@ -26,6 +26,6 @@ jobs:
           gh pr checkout "$PR_NUMBER"
           git cherry-pick "$B_NAME"
           git push
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        #   GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
