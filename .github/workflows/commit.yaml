@@ -10,10 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: ⚙️ Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+    #   - name: ⚙️ Configure Git
+    #     run: |
+    #       git config user.name "$GITHUB_ACTOR"
+    #       git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: commit
         run: |
@@ -23,6 +23,7 @@ jobs:
           git branch "$B_NAME"
           gh pr checkout "$PR_NUMBER"
           echo 'a' >> text.text
+          git config --local user.name "github-actions[bot]"
           git add -A
           git commit -m "test: empty"
 
