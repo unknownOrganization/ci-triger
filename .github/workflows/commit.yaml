@@ -21,6 +21,7 @@ jobs:
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
 
           echo 'a' >> text.text
+          git add -A
           git commit -m "test: empty"
 
           git branch "$B_NAME"
