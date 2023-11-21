@@ -1,0 +1,22 @@
+name: do commit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runcy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: ⚙️ Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: list cypress test workflow
+        run: |
+          git commit --allow-empty -m "test: empty"
+          git push
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        #   GH_TOKEN: ${{ secrets.GH_TOKEN }}
